@@ -1,11 +1,42 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue'
+
+let count = ref(0)
+function dectrementByTen() {
+  count.value -= 10
+}
+function decrement() {
+  count.value--
+}
+function increment() {
+  count.value++
+}
+function incrementByTen() {
+  count.value += 10
+}
+
+function resetCount() {
+  count.value = 0
+}
 </script>
 
 <template>
+  <div>
+    <div>{{ count }}</div>
+    <div>
+      <button @click="dectrementByTen()">-10</button>
+      <button @click="decrement()">-</button>
+      <button @click="increment()">+</button>
+      <button @click="incrementByTen">+10</button>
+    </div>
+    <div>
+      <button @click="resetCount">Reset</button>
+    </div>
+  </div>
+
   <header>
-    kkk
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">

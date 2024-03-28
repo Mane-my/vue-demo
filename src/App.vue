@@ -1,110 +1,92 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
-import { ref } from 'vue'
+<script>
+export default {
+  data() {
+    return {
+      txtValid: '',
+      txtInvalid: ''
+    }
+  },
 
-let count = ref(0)
-function dectrementByTen() {
-  count.value -= 10
-}
-function decrement() {
-  count.value--
-}
-function increment() {
-  count.value++
-}
-function incrementByTen() {
-  count.value += 10
-}
+  methods: {
+    promptField(value) {
+      value = prompt('Verify email')
+      console.log(value)
 
-function resetCount() {
-  count.value = 0
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+        this.txtValid = value
+        this.txtInvalid = ''
+      } else {
+        this.txtInvalid = value
+        this.txtValid = ''
+      }
+    },
+
+    resetValues() {
+      this.txtValid = ''
+      this.txtInvalid = ''
+    }
+  }
 }
 </script>
 
 <template>
-  <div class="counterBlock">
-    <div class="count">{{ count }}</div>
-    <div>
-      <button @click="dectrementByTen()">-10</button>
-      <button class="minus" @click="decrement()">-</button>
-      <button class="plus" @click="increment()">+</button>
-      <button @click="incrementByTen">+10</button>
-    </div>
-    <div>
-      <button class="reset" @click="resetCount">Reset</button>
-    </div>
-  </div>
-
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <div class="btns">
+      <button @click="promptField(value)">Input email</button>
+      <button @click="resetValues()">Reset</button>
+    </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="validField" v-if="txtValid">
+      <h1>{{ txtValid }}</h1>
+      <h4>Email is valid</h4>
+    </div>
+
+    <div class="invalidField" v-if="txtInvalid">
+      <h1>{{ txtInvalid }}</h1>
+      <h4>Email is invalid</h4>
     </div>
   </header>
-
-  <!-- <main>
-    <TheWelcome />
-  </main> -->
 </template>
 
 <style scoped>
-.counterBlock {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.count {
-  color: aliceblue;
-  font-size: 25px;
-}
-button {
+.btns button {
   cursor: pointer;
   color: #989898;
   font-size: 20px;
-  padding: 5px;
+  padding: 10px;
   margin: 5px;
   border: 1px solid hsla(160, 100%, 37%, 1);
   border-radius: 10px;
   background-color: transparent;
 }
 
-.minus {
-  padding: 5px 12px;
-}
-.plus {
-  padding: 5px 10px;
-}
-
-button:hover {
+.btns button:hover {
   background-color: hsla(160, 100%, 37%, 1);
   color: aliceblue;
 }
 
-header {
-  line-height: 1.5;
+.validField h1,
+.invalidField h1 {
+  border-radius: 10px;
+  color: aliceblue;
+  text-align: center;
+  margin-top: 20px;
+  padding-bottom: 7px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.validField h1 {
+  border: 1px solid green;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.validField h4 {
+  color: green;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.invalidField h1 {
+  border: 1px solid red;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.invalidField h4 {
+  color: red;
 }
 </style>

@@ -2,28 +2,30 @@
 export default {
   data() {
     return {
-      txtValid: '',
-      txtInvalid: ''
+      value: '',
+      isEmailValid: false
     }
   },
 
   methods: {
-    promptField(value) {
-      value = prompt('Verify email')
-      console.log(value)
-
-      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
-        this.txtValid = value
-        this.txtInvalid = ''
-      } else {
-        this.txtInvalid = value
-        this.txtValid = ''
+    promptField() {
+      let value = prompt('Verify email')
+      if (!value) {
+        this.isEmailValid = false
+        return
       }
+      value = value.trim()
+      this.value = value
+      let isValid = this.checkEmailValid(value)
+      this.isEmailValid = isValid
+    },
+
+    checkEmailValid(value) {
+      return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
     },
 
     resetValues() {
-      this.txtValid = ''
-      this.txtInvalid = ''
+      this.value = ''
     }
   }
 }
@@ -36,14 +38,11 @@ export default {
       <button @click="resetValues()">Reset</button>
     </div>
 
-    <div class="validField" v-if="txtValid">
-      <h1>{{ txtValid }}</h1>
-      <h4>Email is valid</h4>
-    </div>
+    <div v-if="value">
+      <h1 class="validField" v-if="isEmailValid">{{ value }}</h1>
+      <h1 class="invalidField" v-else>{{ value }}</h1>
 
-    <div class="invalidField" v-if="txtInvalid">
-      <h1>{{ txtInvalid }}</h1>
-      <h4>Email is invalid</h4>
+      <h4>{{ `Email is ${isEmailValid ? 'valid' : 'invalid'}` }}</h4>
     </div>
   </header>
 </template>
@@ -65,8 +64,8 @@ export default {
   color: aliceblue;
 }
 
-.validField h1,
-.invalidField h1 {
+.validField,
+.invalidField {
   border-radius: 10px;
   color: aliceblue;
   text-align: center;
@@ -74,7 +73,7 @@ export default {
   padding-bottom: 7px;
 }
 
-.validField h1 {
+.validField {
   border: 1px solid green;
 }
 
@@ -82,7 +81,7 @@ export default {
   color: green;
 }
 
-.invalidField h1 {
+.invalidField {
   border: 1px solid red;
 }
 

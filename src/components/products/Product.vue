@@ -8,17 +8,20 @@ export default {
     Name,
     Price,
     Description
+  },
+  props: {
+    fruit: {
+      type: Object,
+      required: true
+    }
   }
 }
 </script>
 
 <template>
-  <Name :value="name" />
-  <Price :value="price" />
-  <Description :value="description" />
-  <div></div>
+  <div>
+    <Name :value="fruit.name" />
+    <Price :value="fruit.price" />
+    <Description :value="fruit.description" />
+  </div>
 </template>
-{/* fruits: [ { name: "apple", price: "3$"", description: "Golden apples from Armenia" }, { name:
-"pear", price: "3.4$", description: "Sweet pears" }, { name: "cherry", price: "2.6$", description:
-"Sour red cherries" }, { name: "lemon", price: "4$", description: "Big Chinese lemons" }, { name:
-"banana", price: "3.7$", description: "Fresh bananas from Ecuador" }, ] */}

@@ -1,13 +1,14 @@
 <script>
 export default {
   props: {
-    description: {
+    value: {
       type: String,
       required: true
     }
-  },
-  data() {
-    return {}
   }
 }
 </script>
+
+<template>
+  <div>{{ value }}</div>
+</template>

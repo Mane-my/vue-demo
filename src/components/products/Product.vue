@@ -14,6 +14,11 @@ export default {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    onButtonClick() {
+      this.$emit('currencyChange')
+    }
   }
 }
 </script>
@@ -23,5 +28,6 @@ export default {
     <Name :value="fruit.name" />
     <Price :value="fruit.price" />
     <Description :value="fruit.description" />
+    <button @click="onButtonClick">Change currency</button>
   </div>
 </template>
